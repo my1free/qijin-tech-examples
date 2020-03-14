@@ -16,10 +16,12 @@
 
 	<modules>
 		<module>examples-practice</module>
+		<module>examples-incubator</module>
   </modules>
 
 	<properties>
 		<util4j.project.version>1.0.0</util4j.project.version>
+		<satellites.project.version>1.0.0</satellites.project.version>
 		<usercenter.client.version>1.0.0-SNAPSHOT</usercenter.client.version>
 	</properties>
 
@@ -29,6 +31,13 @@
 				<groupId>tech.qijin.util4j</groupId>
 				<artifactId>util4j-dependencies</artifactId>
 				<version>${util4j.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>tech.qijin.satellites</groupId>
+				<artifactId>satellites-dependencies</artifactId>
+				<version>${satellites.version}</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -63,6 +72,10 @@
 		<dependency>
 			<groupId>tech.qijin.util4j</groupId>
 			<artifactId>util4j-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>tech.qijin.util4j</groupId>
+			<artifactId>util4j-config</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -104,12 +117,14 @@
 			</activation>
 			<properties>
 				<util4j.version>${util4j.project.version}-SNAPSHOT</util4j.version>
+				<satellites.version>${satellites.project.version}-SNAPSHOT</satellites.version>
 			</properties>
 		</profile>
 		<profile>
 			<id>release</id>
 			<properties>
 				<util4j.version>${util4j.project.version}</util4j.version>
+				<satellites.version>${satellites.project.version}</satellites.version>
 			</properties>
 		</profile>
 	</profiles>

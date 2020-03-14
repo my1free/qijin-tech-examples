@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+logging:
+  config: classpath:log4j2-dev.xml
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    druid:
+      url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8
+      username: admins
+      password: Admin_@123
+      driver-class-name: com.mysql.jdbc.Driver
+      initial-size: 10
+      max-active: 30
+      min-idle: 5
+      max-wait: 60
+    freemarker:
+      suffix: .ftl
+      template-loader-path: classpath:/freemarker/
+      cache: false
+      charset: utf-8
+
+# swagger config
+swagger:
+  enable: true

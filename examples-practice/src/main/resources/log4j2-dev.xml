@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <properties>
-        <property name="log.dir">./logs</property>
+        <property name="LOG_HOME">./logs</property>
+        <!--        <property name="PATTERN_LAYOUT">%d [%7r] %6p - %30.30c - %m \n</property>-->
+        <property name="PATTERN_LAYOUT">%d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p][%c{1}] - %m%n</property>
     </properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT" follow="true">
@@ -10,49 +12,82 @@
             </PatternLayout>
         </Console>
 
-        <RollingRandomAccessFile name="RootLog" fileName="${log.dir}/cell-im.log"
-                                 filePattern="${log.dir}/cell-im.log.%d{yyyy-MM-dd}">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p][%c{1}] - %m%n</Pattern>
-            </PatternLayout>
+        <RollingFile name="ACCESS" fileName="${LOG_HOME}/access.log"
+                     filePattern="${LOG_HOME}/access-%d{yyyyMMdd}-%i.log.gz">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Filters>
+            </Filters>
             <Policies>
-                <TimeBasedTriggeringPolicy/>
+                <!--                <TimeBasedTriggeringPolicy/>-->
+                <!--                &lt;!&ndash;单个文件大小&ndash;&gt;-->
+                <!--                <SizeBasedTriggeringPolicy size="500MB"/>-->
             </Policies>
-        </RollingRandomAccessFile>
+            <!--保存日志文件个数-->
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
 
-        <RollingRandomAccessFile name="CheckAlive" fileName="${log.dir}/cell-im.check.log"
-                                 filePattern="${log.dir}/cell-im.check.log.%d{yyyy-MM-dd}">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p][%c{1}] - %m%n</Pattern>
-            </PatternLayout>
+        <RollingFile name="DEBUG" fileName="${LOG_HOME}/debug.log"
+                     filePattern="${LOG_HOME}/debug-%d{yyyyMMdd}-%i.log.gz">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Filters>
+                <!--如果是error级别拒绝-->
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <!--如果是debug\info\warn输出-->
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
+                <!--单个文件大小-->
+                <SizeBasedTriggeringPolicy size="500MB"/>
             </Policies>
-        </RollingRandomAccessFile>
+            <!--保存日志文件个数-->
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
 
-        <RollingRandomAccessFile name="RequestLog" fileName="${log.dir}/cell-im.request.log"
-                                 filePattern="${log.dir}/cell-im.request.log.%d{yyyy-MM-dd}">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p][%c{1}] - %m%n</Pattern>
-            </PatternLayout>
+        <RollingFile name="INFO" fileName="${LOG_HOME}/info.log" filePattern="${LOG_HOME}/info-%d{yyyyMMdd}-%i.log.gz">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Filters>
+                <!--如果是error级别拒绝-->
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <!--如果是debug\info\warn输出-->
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
+                <!--单个文件大小-->
+                <SizeBasedTriggeringPolicy size="2MB"/>
             </Policies>
-        </RollingRandomAccessFile>
+            <!--保存日志文件个数-->
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <!--error级别日志输出-->
+        <RollingFile name="ERROR" fileName="${LOG_HOME}/error.log"
+                     filePattern="${LOG_HOME}/error-%d{yyyyMMdd}-%i.log.gz">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="500MB"/>
+            </Policies>
+        </RollingFile>
 
     </Appenders>
 
 
     <Loggers>
-        <Logger name="CHECK" level="info" additivity="false">
-            <AppenderRef ref="CheckAlive"/>
+        <Logger name="REQUEST" level="info" additivity="false">
+            <AppenderRef ref="ACCESS"/>
         </Logger>
-        <Logger name="REQUEST" level="info" additivity="true">
-            <AppenderRef ref="RequestLog"/>
-        </Logger>
+
         <Root level="info">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="RootLog"/>
+            <AppenderRef ref="DEBUG"/>
+            <AppenderRef ref="INFO"/>
+            <AppenderRef ref="ERROR"/>
         </Root>
     </Loggers>
 </Configuration>
