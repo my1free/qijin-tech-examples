@@ -1,0 +1,15 @@
+# profile config
+# 参考地址: https://www.baeldung.com/spring-profiles
+spring:
+  profiles:
+    active: @spring.profiles.active@
+
+# mybatis config
+mybatis:
+  config-location: classpath:sqlMapConfig.xml
+
+# logging config
+logging:
+  level:
+    tech.qijin.cell.im.db: DEBUG
+

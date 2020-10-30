@@ -17,6 +17,7 @@
 	<modules>
 		<module>examples-practice</module>
 		<module>examples-incubator</module>
+		<module>examples-jline</module>
   </modules>
 
 	<properties>
