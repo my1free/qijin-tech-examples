@@ -1,6 +1,7 @@
 package tech.qijin.examples.practice.service;
 
 import org.springframework.stereotype.Service;
+import tech.qijin.util4j.aop.annotation.Log;
 
 @Service
 public class StackService {
@@ -14,6 +15,7 @@ public class StackService {
         return sb.toString();
     }
 
+    @Log
     public Object stack() {
         Thread currentThread = Thread.currentThread();
         StackTraceElement[] stackTraceElementArray = currentThread.getStackTrace();

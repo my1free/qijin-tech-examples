@@ -11,6 +11,7 @@
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p][%F:%L] - %m%n</Pattern>
             </PatternLayout>
         </Console>
+        <Prometheus name="METRICS"/>
 
         <RollingFile name="ACCESS" fileName="${LOG_HOME}/access.log"
                      filePattern="${LOG_HOME}/access-%d{yyyyMMdd}-%i.log.gz">
@@ -84,6 +85,7 @@
         </Logger>
 
         <Root level="info">
+            <AppenderRef ref="METRICS"/>
             <AppenderRef ref="Console"/>
             <AppenderRef ref="DEBUG"/>
             <AppenderRef ref="INFO"/>

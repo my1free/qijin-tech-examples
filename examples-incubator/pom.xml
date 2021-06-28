@@ -32,6 +32,15 @@
             <groupId>tech.qijin.satellites</groupId>
             <artifactId>satellites-uploader</artifactId>
         </dependency>
+        <dependency>
+            <groupId>tech.qijin.satellites</groupId>
+            <artifactId>satellites-im</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.qijin.satellites</groupId>
+            <artifactId>satellites-user</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>com.googlecode.aviator</groupId>
@@ -93,7 +102,7 @@
     </dependencies>
 
     <build>
-        <finalName>examples-incubator</finalName>
+        <finalName>incubators</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

@@ -3,6 +3,7 @@ package tech.qijin.examples.practice.server.api;
 import com.google.common.collect.Maps;
 import com.sun.management.HotSpotDiagnosticMXBean;
 import com.sun.management.VMOption;
+import io.prometheus.client.spring.web.PrometheusTimeMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,7 @@ public class MxBeansController {
     @Autowired
     private MxBeanService mxBeanService;
 
+    @PrometheusTimeMethod(name = "mbeans.info", help = "asdf")
     @GetMapping("/info")
     public Object info() {
         return mxBeanService.info();
